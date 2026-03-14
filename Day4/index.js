@@ -1,5 +1,10 @@
 import express, { application } from "express"; 
 import MainRouter from "./routes/index.js";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import UserSchema from "./models/user.schema.js";
+
+dotenv.config();
 
 const app = express();
 
@@ -74,6 +79,81 @@ app.delete("/delete-user", (req, res) => {
   }
   res.json({ message: "User deleted successfully", users: usersList });
 });
+
+app.get("/add-user", async  (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    if ( !name || !email || !password ) {
+      return res
+      .status(400)
+      .json({ message: "Name, Email and Password are required"});
+    }
+    const newUser = new UserSchema({
+      name: name,
+      email: email,
+      password: password,
+    });
+    console.log(newUser, "newUser");
+
+    await newUser.save();
+    return res
+    .status(201)
+    .json({ message: "User added successfully", user: newUser});
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+app.post("/get-users", async (req, res) => {
+  try {
+    const users = await UserSchema.find({ isActive: true });
+    return res
+    .status(200)
+    .json({ users: users, message: "Users fetched successfully"});
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.patch("/update-user/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ message: "email is required"});
+
+    const updatedUser = await UserSchema.findByIdAndUpdate(userId, { email }, { new: true });
+    console.log(updatedUser, "updatedUser");
+    return res.status(200).json({ message: "User updated successfully"});
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.delete("/delete-user/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    await UserSchema.findByIdAndDelete(
+      userId,
+      { isActive: false });
+    return res.status(200).json({ message: "User deleted successfully"});
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+mongoose
+  .connect(process.env.MONGODB_URL)
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.log("Error connecting to MongoDB", err);
+  });
 
 app.listen(8000, () => {
     console.log("Server is running on port 8000");
