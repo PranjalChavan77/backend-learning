@@ -94,17 +94,7 @@ app.delete("/delete-user/:id",async(req,res)=>{
             message: "Server error"
         });
     }
-})
-// app.patch("/update-user/:id", async (req, res) => {
-//   try {
-
-    
-    
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ message: "Internal server error" });
-//   }
-// });
+});
 
 mongoose.connect("mongodb+srv://PranjalChavan:DO2JDE6UXoIAwkcv@cluster0.45nnqfb.mongodb.net/ToDoList")
 .then(() => console.log("Connected Successfully"))
