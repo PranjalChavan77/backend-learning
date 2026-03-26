@@ -10,140 +10,160 @@ ProductRouter.get("/add-product", async (req, res) => {
     "price": 75000,
     "description": "High-performance laptop",
     "category": "Electronics",
-    "stock": 12
+    "stock": 12,
+    "seller": "69c3bca5dba711b6eb1c53e3"
   },
   {
     "name": "Smartphone",
     "price": 25000,
     "description": "Android smartphone",
     "category": "Electronics",
-    "stock": 30
+    "stock": 30,
+    "seller": "69c3bd0fdba711b6eb1c53ea"
   },
   {
     "name": "Headphones",
     "price": 1500,
     "description": "Noise cancelling headphones",
     "category": "Accessories",
-    "stock": 50
+    "stock": 50,
+    "seller": "69c3bca5dba711b6eb1c53e3"
   },
   {
     "name": "Bluetooth Speaker",
     "price": 1800,
     "description": "Portable speaker",
     "category": "Accessories",
-    "stock": 20
+    "stock": 20,
+    "seller": "69c3bd0fdba711b6eb1c53ea"
   },
   {
     "name": "Keyboard",
     "price": 700,
     "description": "Mechanical keyboard",
     "category": "Computer",
-    "stock": 25
+    "stock": 25,
+    "seller": "69c3bca5dba711b6eb1c53e3"
   },
   {
     "name": "Mouse",
     "price": 500,
     "description": "Wireless mouse",
     "category": "Computer",
-    "stock": 40
+    "stock": 40,
+    "seller": "69c3bd0fdba711b6eb1c53ea"
   },
   {
     "name": "Monitor",
     "price": 12000,
     "description": "24-inch LED monitor",
     "category": "Electronics",
-    "stock": 10
+    "stock": 10,
+    "seller": "69c3bca5dba711b6eb1c53e3"
   },
   {
     "name": "Smartwatch",
     "price": 5000,
     "description": "Fitness smartwatch",
     "category": "Wearables",
-    "stock": 15
+    "stock": 15,
+    "seller": "69c3bd0fdba711b6eb1c53ea"
   },
   {
     "name": "Shoes",
     "price": 1200,
     "description": "Running shoes",
     "category": "Fashion",
-    "stock": 22
+    "stock": 22,
+    "seller": "69c3bca5dba711b6eb1c53e3"
   },
   {
     "name": "Backpack",
     "price": 800,
     "description": "Waterproof backpack",
     "category": "Fashion",
-    "stock": 18
+    "stock": 18,
+    "seller": "69c3bd0fdba711b6eb1c53ea"
   },
   {
     "name": "Coffee Maker",
     "price": 2500,
     "description": "Automatic coffee machine",
     "category": "Home Appliances",
-    "stock": 8
+    "stock": 8,
+    "seller": "69c3bca5dba711b6eb1c53e3"
   },
   {
     "name": "Microwave Oven",
     "price": 7500,
     "description": "Convection oven",
     "category": "Home Appliances",
-    "stock": 6
+    "stock": 6,
+    "seller": "69c3bd0fdba711b6eb1c53ea"
   },
   {
     "name": "Fan",
     "price": 1500,
     "description": "Electric fan",
     "category": "Home Appliances",
-    "stock": 30
+    "stock": 30,
+    "seller": "69c3bca5dba711b6eb1c53e3"
   },
   {
     "name": "T-Shirt",
     "price": 400,
     "description": "Cotton t-shirt",
     "category": "Fashion",
-    "stock": 50
+    "stock": 50,
+    "seller": "69c3bd0fdba711b6eb1c53ea"
   },
   {
     "name": "Jeans",
     "price": 1000,
     "description": "Blue denim jeans",
     "category": "Fashion",
-    "stock": 35
+    "stock": 35,
+    "seller": "69c3bca5dba711b6eb1c53e3"
   },
   {
     "name": "Book",
     "price": 300,
     "description": "Fiction novel",
     "category": "Books",
-    "stock": 100
+    "stock": 100,
+    "seller": "69c3bd0fdba711b6eb1c53ea"
   },
   {
     "name": "Water Bottle",
     "price": 200,
     "description": "Steel bottle",
     "category": "Accessories",
-    "stock": 45
+    "stock": 45,
+    "seller": "69c3bca5dba711b6eb1c53e3"
   },
   {
     "name": "Table Lamp",
     "price": 700,
     "description": "LED study lamp",
     "category": "Home Decor",
-    "stock": 15
+    "stock": 15,
+    "seller": "69c3bd0fdba711b6eb1c53ea"
   },
   {
     "name": "Charger",
     "price": 350,
     "description": "Fast Type-C charger",
     "category": "Electronics",
-    "stock": 40
+    "stock": 40,
+    "seller": "69c3bca5dba711b6eb1c53e3"
   },
   {
     "name": "HDMI Cable",
     "price": 250,
     "description": "High-speed HDMI cable",
     "category": "Electronics",
-    "stock": 60
+    "stock": 60,
+    "seller": "69c3bd0fdba711b6eb1c53ea"
   }
 ];
     await ProductSchema.insertMany(products);
@@ -194,6 +214,23 @@ ProductRouter.get("/advance-queries", async (req, res) => {
             message: error.message,
         });
     }
+});
+
+ProductRouter.get("/get-products", async (req, res) => {
+  try {
+    const products = await ProductSchema.find().populate(
+      "seller",
+      "name email -_id",
+    );
+    res.status(200).json({
+      success: true,
+      data: products,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+    });
+  }
 });
 
 export default ProductRouter;
