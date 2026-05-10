@@ -2,6 +2,7 @@ import { Router } from "express";
 import AdminRouter from "./admin.routes.js";
 import UserRouter from "./user.routes.js";
 import ProductRouter from "./product.routes.js";
+import OperatorRouter from "./operator.routes.js";
 
 const MainRouter = Router();
 
@@ -9,6 +10,7 @@ const MainRouter = Router();
 MainRouter.use("/admin", AdminRouter);
 MainRouter.use("/user", UserRouter);
 MainRouter.use("/product", ProductRouter);
+MainRouter.use("/operators", OperatorRouter);
 // MainRouter.use("/payment", AdminRouter)
 // MainRouter.use("/user", AdminRouter)
 // MainRouter.use("/seller", AdminRouter)
