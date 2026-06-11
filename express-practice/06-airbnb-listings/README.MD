@@ -60,23 +60,23 @@ Each card now displays:
 
 ### 🔹 Home Page
 
-![Home Page](./public/screenshots/home-page.png)
+![Home Page](./public/screenshots/home-page.PNG)
 
 ### 🔹 Register Home Page
 
-![Register Home](./public/screenshots/register-home.png)
+![Register Home](./public/screenshots/register-home.PNG)
 
 ### 🔹 Registration Success Page
 
-![Registration Success](./public/screenshots/register-success.png)
+![Registration Success](./public/screenshots/register-success.PNG)
 
 ### 🔹 Registered Home Card
 
-![Home Card](./public/screenshots/home-card.png)
+![Home Card](./public/screenshots/home-card.PNG)
 
 ### 🔹 Custom 404 Page
 
-![404 Page](./public/screenshots/404-page.png)
+![404 Page](./public/screenshots/404-page.PNG)
 
 ## 🚀 Learning Outcome
 
